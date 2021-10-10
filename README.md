@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+# Weather App con Class Components y Styled Componentes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Está basado en la app de Henry, pero no usa function components ni hooks
 
-## Available Scripts
+## Sobre Styled Components
 
-In the project directory, you can run:
+Funciona creando labels personalizados a los que les puedes dar estilos de CSS, cada uno tiene una clase única, por lo que los estilos no se cruzan a menos que sean heredados desde un elemento padre. Por ejemplo mi archivo GlobalCss.jsx sustituye el div ="app" con Global className="App" dentro de App.jsx. Por ello los demás divs heredan la fuente personalizada Roboto. A grandes rasgos funciona como CSS normal, pero da mejor control sobre los estilos de cada componente 
 
-### `npm start`
+## Estructura de la app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- App.jsx e Index.jsx se mantienen dentro de src como están por default.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Los componentes propios (Cards.jsx, Nav.jsx, etc.) se encuentran en la carpeta de /components.
 
-### `npm test`
+- Los estilos creados con styled components comparten la teminación Css para especificar lo que hacen, ademas estan en la carpeta de styles para evitar revolver componentes con estilos .
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- CardStyles contiene estilos de elementos hijo del card, pero tamién se pudieron declarar todos en el archivo CardCss.jsx usando exports para cada tag.
 
-### `npm run build`
+## Completado
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- App manda correctamente los props a nav y cards.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Nav manda correctaente la funcion onSearch al searchBar.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Cards recibe correctamente el arreglo de ciudades para renderizar la lista de cards, tambien manda correctamente la funcion onClose a Card.
 
-### `npm run eject`
+- onClose recibe correctamente el id de la card que hay que filtrar. Hasta el momento solo sirve con un console.log(id) para comprobar que el id sí llega hasta App.jsx (donde la función es declarada y bindeada al objeto.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Errores
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Al ejecutarse la función onClose, no acepta el arreglo de ciudades (this.state.cities) para actualizarlo, crashea la app y marca el siguiente error:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+TypeError: Cannot read properties of undefined (reading 'cities')
+onClose
