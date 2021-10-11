@@ -21,17 +21,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      apiKey: "4ae2636d8dfbdc3044bede63951a019b",
       cities: [], //propiedad que espera un dato para cambiar de estado
-      titulo: this.props.titulo, //valor asignado desde props heredados
-      onClose: this.onClose
+      titulo: this.props.titulo //valor asignado desde props heredados
+      
     }
 
     //si usas arrow function no tienes que bindear, se hace automatico
     //si no es con arrow function, debes bindear cada función al objeto
-
+    //this.onClose = this.onClose.bind(this) <-- declarado con arr func
     //this.setCities = this.setCities.bind(this) <--declarado con arr func
-    this.onClose = this.onClose.bind(this)
-    this.onSearch = this.onSearch.bind(this)
+    this.onSearch = this.onSearch.bind(this) //ej de como bindear si no usas arr func
   }
 
   //pasa como param la nueva ciudad para cambiar el state del arr que
@@ -42,11 +42,18 @@ class App extends Component {
     console.log(this.state.cities)
   }
 
-  filterCities= (id) =>{}
+  onClose = id =>{
+    //Se crea un arreglo que copie todos los elementos menos el que se quiere eliminar
+    let ciudades = this.state.cities.filter(c => c.id !== id)
+    //se usa setState para sustituir el arreglo guardado en cities
+    this.setState({cities: ciudades}) 
+    console.log(ciudades)
+    
+  }
 
   onSearch(ciudad) {
 
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=4ae2636d8dfbdc3044bede63951a019b&units=metric`)
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${this.state.apiKey}&units=metric`)
       .then(r => r.json())
       .then(recurso => {
         if (recurso.main !== undefined) {
@@ -68,9 +75,7 @@ class App extends Component {
       })
   }
 
-  onClose(id) {
-    this.setState({cities: [this.state.cities.filter(c=>c.id!==id)]})
-  }
+
 
 
   render() {
@@ -79,11 +84,14 @@ class App extends Component {
     //llegar al que lo usará (App --> Nav --> searchBar)
 
     return (
+      //las funciones se pasan como prop sin necesidad de añadiralas al estado si
+      //se declararon en éste componente, pero se deben añadir al state de los componentes
+      //que los hereden (Nav y Cards)
       <Global className="App">
         <Nav onSearch={this.onSearch} />
         <Cards
           cities={this.state.cities}
-          onClose={this.state.onClose}
+          onClose={this.onClose}
         />
       </Global>
     );

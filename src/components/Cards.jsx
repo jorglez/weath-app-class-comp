@@ -6,11 +6,12 @@ class Cards extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      //ya que la función la heredaron por props, debe añadirse al state del componente actual
       onClose: this.props.onClose
     }
   }
   render() {
-    const cities = this.props.cities
+    //const cities = this.props.cities
     //console.log("desde cards",cities)
     return (
       <CardsCss>
@@ -21,7 +22,7 @@ class Cards extends Component {
           id={city.id}
           key={city.id}
           img={city.img}
-          
+
           onClose={this.state.onClose}
         />)}
       </CardsCss>

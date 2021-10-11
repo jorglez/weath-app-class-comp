@@ -13,6 +13,7 @@ class Card extends Component {
       id: props.id,
       key:props.id,
       img: props.img,
+      //funcion asignada al state porque se heredó por props
       onClose: props.onClose
     }
   }
@@ -23,6 +24,7 @@ class Card extends Component {
         <CloseBtnCss onClick={e=> {
           e.preventDefault()
           this.state.onClose(this.state.id)
+
           }}>X</CloseBtnCss>
         <h2>{this.state.name}</h2>
         <CardBodyCss> {/*info body*/}

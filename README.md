@@ -12,7 +12,7 @@ Funciona creando labels personalizados a los que les puedes dar estilos de CSS, 
 
 - Los componentes propios (Cards.jsx, Nav.jsx, etc.) se encuentran en la carpeta de /components.
 
-- Los estilos creados con styled components comparten la teminación Css para especificar lo que hacen, ademas estan en la carpeta de styles para evitar revolver componentes con estilos .
+- Los estilos creados con styled components comparten la teminación Css para especificar lo que hacen, ademas estan en la carpeta de styles para evitar revolver componentes con estilos.
 
 - CardStyles contiene estilos de elementos hijo del card, pero tamién se pudieron declarar todos en el archivo CardCss.jsx usando exports para cada tag.
 
@@ -24,11 +24,10 @@ Funciona creando labels personalizados a los que les puedes dar estilos de CSS, 
 
 - Cards recibe correctamente el arreglo de ciudades para renderizar la lista de cards, tambien manda correctamente la funcion onClose a Card.
 
-- onClose recibe correctamente el id de la card que hay que filtrar. Hasta el momento solo sirve con un console.log(id) para comprobar que el id sí llega hasta App.jsx (donde la función es declarada y bindeada al objeto.
+- onClose recibe correctamente el id de la card que hay que filtrar y crea un arreglo nuevo para sustituir el contenido en this.state.cities.
 
-## Errores
+## Pendiente
 
-- Al ejecutarse la función onClose, no acepta el arreglo de ciudades (this.state.cities) para actualizarlo, crashea la app y marca el siguiente error:
+- Añadir e implementar react-router-dom para mostrar más información de la ciudad al dar click sobre su nombre.
 
-TypeError: Cannot read properties of undefined (reading 'cities')
-onClose
+- Crear los Media Queries para implementar el diseño de la página para escritorio.
