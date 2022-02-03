@@ -9,4 +9,11 @@ export const CardCss = styled.div `
   & h2{
     text-align: center;
   }
+  & a{
+    text-decoration: none;
+    color: white;
+    &:hover{
+      color: orange;
+    }
+  }
 `

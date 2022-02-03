@@ -9,4 +9,7 @@ export const Global = styled.div `
     background-size: cover;
     background-position: center center;
     overflow-y: scroll;
+    & .active{
+      color: orange;
+    }
 `

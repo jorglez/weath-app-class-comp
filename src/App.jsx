@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Global } from './styles/GlobalCss'
+import { Route } from 'react-router-dom'
+
 import Nav from './components/Nav'
 import Cards from './components/Cards'
+import About from './components/About'
+import Ciudad from './components/Ciudad'
+
 
 /*
   Los hooks declaran en una línea la variable, la función que manipula dicha variable y el tipo (string, objeto, etc.) que espera, ejemplo: [cities, setCities] = useState([]).
@@ -24,7 +29,7 @@ class App extends Component {
       apiKey: "4ae2636d8dfbdc3044bede63951a019b",
       cities: [], //propiedad que espera un dato para cambiar de estado
       titulo: this.props.titulo //valor asignado desde props heredados
-      
+
     }
 
     //si usas arrow function no tienes que bindear, se hace automatico
@@ -42,18 +47,18 @@ class App extends Component {
     console.log(this.state.cities)
   }
 
-  onClose = id =>{
+  onClose = id => {
     //Se crea un arreglo que copie todos los elementos menos el que se quiere eliminar
     let ciudades = this.state.cities.filter(c => c.id !== id)
     //se usa setState para sustituir el arreglo guardado en cities
-    this.setState({cities: ciudades}) 
+    this.setState({ cities: ciudades })
     console.log(ciudades)
-    
+
   }
 
   onSearch(ciudad) {
 
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${this.state.apiKey}&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${this.state.apiKey}&units=metric`)
       .then(r => r.json())
       .then(recurso => {
         if (recurso.main !== undefined) {
@@ -62,7 +67,13 @@ class App extends Component {
             max: Math.round(recurso.main.temp_max),
             img: recurso.weather[0].icon,
             id: recurso.id,
-            name: recurso.name
+            wind: recurso.wind.speed,
+            temp: recurso.main.temp,
+            name: recurso.name,
+            weather: recurso.weather[0].main,
+            clouds:recurso.clouds.all,
+            lat: recurso.coord.lat,
+            long: recurso.coord.lon
           }
           let contenido = this.state.cities
           if (contenido.findIndex(city => city.name === ciudadRes.name) === -1) {
@@ -75,8 +86,12 @@ class App extends Component {
       })
   }
 
+  onFilter(cNom){
+    let ciudad = this.state.cities.filter(c => c.name === cNom)
 
-
+    if(ciudad.length>0) return ciudad[0]
+    else return null
+  }
 
   render() {
 
@@ -88,10 +103,25 @@ class App extends Component {
       //se declararon en éste componente, pero se deben añadir al state de los componentes
       //que los hereden (Nav y Cards)
       <Global className="App">
-        <Nav onSearch={this.onSearch} />
-        <Cards
-          cities={this.state.cities}
-          onClose={this.onClose}
+        <Route
+          path='/'
+          render={() => <Nav onSearch={this.onSearch} />}
+        />
+        <Route exact path="/"
+          render={() => <Cards
+            cities={this.state.cities}
+            onClose={this.onClose}
+          />}
+        />
+        <Route
+          path="/about"
+          render={()=><About titulo="About"/>}
+        />
+        <Route
+          path={`/info/:ciudadNom`}
+          render={({match}) => <Ciudad
+            city={this.onFilter(match.params.ciudadNom)}
+          />}
         />
       </Global>
     );

@@ -12,10 +12,10 @@ export const SBCss = styled.form `
     padding: 10px;
     background-color: rgba(0 ,0 ,0, 0.3);
     color: white;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 10px 10px 0!important;
     border: none;
     &:hover{
-
+      background-color: rgba(0 ,0 ,0, 0.5);
     }
   }
 `

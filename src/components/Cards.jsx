@@ -7,7 +7,7 @@ class Cards extends Component {
     super(props);
     this.state = {
       //ya que la función la heredaron por props, debe añadirse al state del componente actual
-      onClose: this.props.onClose
+      onClose: this.props.onClose,
     }
   }
   render() {
@@ -15,7 +15,7 @@ class Cards extends Component {
     //console.log("desde cards",cities)
     return (
       <CardsCss>
-        {cities.map(city => <Card
+        {this.props.cities.map(city => <Card
           max={city.max}
           min={city.min}
           name={city.name}

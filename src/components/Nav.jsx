@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {NavCss} from '../styles/NavCss'
 import SearchBar from './SearchBar';
+import {NavLink, Route} from 'react-router-dom'
 
 /* para poder enviar la función de onSearch hasta el searchBar, es necesario asignarlo al state de éste componente y después enviar el estado como prop al siguiente, sino no va a transferirse la información de regreso desde el searchBar hasta app */
 
@@ -13,8 +14,18 @@ class Nav extends Component {
 	}
 	render() {
 		return (
+
 			<NavCss>
-				<SearchBar onSearch={this.state.onSearch}/>
+        <NavLink exact to="/">
+          Home
+        </NavLink>
+        <NavLink to="/about">
+          About
+        </NavLink>
+        <Route
+          exact path="/"
+          render={()=><SearchBar onSearch={this.state.onSearch}/>}
+        />
 			</NavCss>
 		);
 	}

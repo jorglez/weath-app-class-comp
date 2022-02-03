@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
+
 import { CardCss } from '../styles/CardCss'
 import CloseBtnCss from '../styles/CloseBtnCss'
 import CardBodyCss from '../styles/CardStyles/CardBodyCss';
@@ -11,7 +13,7 @@ class Card extends Component {
       max: props.max,
       name: props.name,
       id: props.id,
-      key:props.id,
+      key: props.id,
       img: props.img,
       //funcion asignada al state porque se heredó por props
       onClose: props.onClose
@@ -21,12 +23,14 @@ class Card extends Component {
     //console.log("desde card.jsx",this.state.onClose)
     return (
       <CardCss key={this.state.key} id={this.state.id}>
-        <CloseBtnCss onClick={e=> {
+        <CloseBtnCss onClick={e => {
           e.preventDefault()
           this.state.onClose(this.state.id)
 
-          }}>X</CloseBtnCss>
-        <h2>{this.state.name}</h2>
+        }}>X</CloseBtnCss>
+        <Link to={`/info/${this.state.name}`}>
+          <h2>{this.state.name}</h2>
+        </Link>
         <CardBodyCss> {/*info body*/}
           <CBLeftCss>{/*info body left*/}
             <div> {/* min_temp side */}
@@ -39,7 +43,7 @@ class Card extends Component {
             </div>
           </CBLeftCss>
           <div>{/*info body right (icon)*/}
-            <img src={`http://openweathermap.org/img/wn/${this.state.img}@2x.png`} alt="" />
+            <img src={`https://openweathermap.org/img/wn/${this.state.img}@2x.png`} alt="" />
           </div>
         </CardBodyCss>
       </CardCss>
